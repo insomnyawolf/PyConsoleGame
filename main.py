@@ -1,5 +1,6 @@
 import random
 import msvcrt #msvcrt.getch()
+import os
 
 K1 = "q"
 K2 = "w"
@@ -12,9 +13,15 @@ K8 = "i"
 K9 = "o"
 K10= "p"
 
+keys=[]
+keys_print=[]
+
 def rnd(a,b):
     num = random.randint(a,b)
-    return(num) 
+    return(num)
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def keynumber():
     return rnd(1,keyn)
@@ -26,7 +33,7 @@ def key():
     variable = ""
     while (count <= keyn):
         if(count == keyid):
-            output += "[ "
+            output += "[="
             if  (keyid == 1):
                 output += K1
                 variable = K1
@@ -57,13 +64,26 @@ def key():
             elif (keyid == 10):
                 output += K10
                 variable = K10
-            output += " ]  "
+            output += "=]"
 
         else:
-            output += "[   ]  "
+            output += "[   ]"
+        output += "  "
         count+=1
-    print (output)
-    return variable
+    keys_print.append(output)
+    keys.append(variable)
+
+def start():
+    n = 0
+    while (n < 10):
+        key()
+        n+=1
+    scroll()
+
+def scroll():
+    clear()
+    for val in keys_print:
+        print(val)
 
 def help():
     print("To Do")
@@ -74,14 +94,23 @@ def score(score_count):
 def game():
     while True:
         score_count = 0
+        start()
         while True:
-            if (key() == msvcrt.getwch()):
+            print(keys[0])
+            if (keys[0] == msvcrt.getwch()):
+                del keys[0]
+                del keys_print[0]
+                scroll()
+                key()
                 score_count += 1
             else:
                 score(score_count)
+                del keys[:]
+                del keys_print[:]
                 break
         print("press q to quit, anything else to retry")
         if (msvcrt.getwch() == "q"):
+            clear()
             break
 
 while True:
@@ -103,3 +132,15 @@ while True:
         game()
     elif(thing == "help"):
         help()
+
+        # ToDo
+
+#Well Done Score System
+#reverse scroll mode
+
+#Proper Game Scroll
+
+#InFile Keybindings
+
+
+#CODE CLEAN
