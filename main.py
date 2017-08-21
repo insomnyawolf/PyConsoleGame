@@ -95,7 +95,7 @@ while True:
         while True:
             try:
                 keyn = input()
-                if (keyn < 0 or keyn > 10):
+                if (keyn < 1 or keyn > 10):
                     raise Exception()
                 break
             except:
